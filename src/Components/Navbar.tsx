@@ -1,17 +1,23 @@
 import { ArrowRight, Menu, PencilRuler } from "lucide-react";
-import Login from "../Pages/Auth/Login";
+import { useDispatch } from "react-redux";
+import { setAuthModal } from "../redux/modalSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
+  const dispatchOpenModal = () => {
+    console.log("despatching open modal");
+    dispatch(setAuthModal("Login"));
+  };
   return (
     <>
-      <div className="modal modal-open">
-        <Login />
-      </div>
       <div className="navbar bg-base-200 w-full px-8 py-5 fixed z-50 border-b border-b-orange-400">
         <div className="mx-2 flex-1 px-2">
-          <button className="font-bold font-white text-xl btn btn-ghost hover:text-orange-400">
-            <PencilRuler className="text-orange-400 size-10" />
-            Interview Prep.AI
+          <button className="font-bold font-white text-xl btn btn-ghost ">
+            <PencilRuler className="text-orange-500 size-10" />
+            <span className="hover:bg-linear-to-r bg-white hover:from-orange-700 hover:to-orange-400 duration-300 transition-all text-transparent bg-clip-text">
+              Interview Prep.AI
+            </span>
           </button>
         </div>
         <div className="hidden flex-none lg:block">
@@ -20,7 +26,8 @@ const Navbar = () => {
             <li>
               <label
                 htmlFor="login_modal"
-                className="btn btn-outline border-orange-400 py-4 px-8 btn-lg hover:btn-primary"
+                onClick={dispatchOpenModal}
+                className="btn btn-outline border-orange-400 py-4 px-8 btn-lg hover:bg-linear-to-r hover:from-orange-700 hover:to-orange-400 duration-300 transition-all active:scale-95"
               >
                 Login/Signup
                 <ArrowRight />

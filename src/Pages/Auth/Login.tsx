@@ -1,19 +1,32 @@
 import { Eye, KeySquare, LucideEyeOff, Mail } from "lucide-react";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
+import { useDispatch } from "react-redux";
+import { setAuthModal } from "../../redux/modalSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const handelSubmit = () => {};
+  const handelSubmit = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
+  const dispatch = useDispatch();
+
+  const dispatchSignUpModal = () => {
+    dispatch(setAuthModal("SignUp"));
+  };
 
   return (
     // <div className="modal modal-open ">
-    <div className="card bg-base-100  shadow-2xl p-5 shadow-orange-400">
+    <div className="card bg-base-100 absolute shadow-2xl p-5 shadow-orange-400">
       <div className="card-title text-lg items-center justify-center pt-4">
         Login
       </div>
       <div className="card-body">
-        <form className="form fieldset space-y-2 gap-2" onSubmit={handelSubmit}>
+        <form
+          className="form fieldset space-y-2 gap-2"
+          onSubmit={(e) => handelSubmit(e)}
+        >
           <label className="input  min-w-md input-md">
             <Mail />
             <input
@@ -52,7 +65,10 @@ const Login = () => {
           <button className="btn btn-neutral mt-4">Login</button>
           <div className="flex items-center justify-center  gap-2">
             <span>Don't have account ? </span>
-            <a className="link link-hover text-orange-400 font-semibold">
+            <a
+              onClick={dispatchSignUpModal}
+              className="link link-hover text-orange-400 font-semibold"
+            >
               {"SignUp Now"}
             </a>
           </div>

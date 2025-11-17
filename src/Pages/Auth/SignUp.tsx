@@ -1,30 +1,56 @@
 import { Eye, KeySquare, LucideEyeOff, Mail, User2 } from "lucide-react";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
+import { useDispatch } from "react-redux";
+import { setAuthModal } from "../../redux/modalSlice";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const handelSubmit = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
+  const dispatch = useDispatch();
+
+  const dispatchLoginModal = () => {
+    dispatch(setAuthModal("Login"));
+  };
+
   return (
     // <div className="modal modal-open ">
-    <div className="card bg-base-100  shadow-2xl p-5 shadow-orange-400">
+    <div className="card bg-base-100 absolute shadow-2xl p-5 shadow-orange-400">
       <div className="card-title text-lg items-center justify-center pt-4">
         SignUp
       </div>
       <div className="card-body">
-        <fieldset className="fieldset space-y-2 gap-2">
+        <form
+          className="fieldset form space-y-2 gap-2"
+          onSubmit={(e) => handelSubmit(e)}
+        >
           <label className="input  min-w-md input-md">
             <User2 />
-            <input type="text" className="grow" placeholder="Full Name" />
+            <input
+              type="text"
+              className="grow"
+              required
+              placeholder="Full Name"
+            />
           </label>
           <label className="input  min-w-md input-md">
             <Mail />
-            <input type="email" className="grow" placeholder="Email address" />
+            <input
+              type="email"
+              className="grow"
+              required
+              placeholder="Email address"
+            />
           </label>
           <label className="input min-w-md input-md">
             <KeySquare />
             <input
               type={showPassword ? "text" : "password"}
               className="grow"
+              required
               placeholder="Password"
             />
             {showPassword ? (
@@ -45,6 +71,7 @@ const SignUp = () => {
             <input
               type={showPassword ? "text" : "password"}
               className="grow"
+              required
               placeholder="Confirm Password"
             />
             {showPassword ? (
@@ -63,11 +90,14 @@ const SignUp = () => {
           <button className="btn btn-neutral mt-4">SignUp</button>
           <div className="flex items-center justify-center  gap-2">
             <span>Have account ? </span>
-            <a className="link link-hover text-orange-400 font-semibold">
+            <a
+              onClick={dispatchLoginModal}
+              className="link link-hover text-orange-400 font-semibold"
+            >
               {"Login Now"}
             </a>
           </div>
-        </fieldset>
+        </form>
       </div>
     </div>
     // </div>
