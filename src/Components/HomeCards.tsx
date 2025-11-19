@@ -9,7 +9,7 @@ const HomeCards = () => {
             <h2 className="text-white text-[42px] text-semiBold">
               Be Ready For Anything
             </h2>
-            <p className="text-slate-200 max-w-lg mx-auto py-4">
+            <p className="text-gray-50 max-w-lg mx-auto py-4">
               Everything you need to Learn, Organize and enhance your skills
               with cutting edge technology.{" "}
             </p>
@@ -28,8 +28,8 @@ const HomeCards = () => {
                   background: `linear-gradient(to bottom, ${feature.bg.from}, ${feature.bg.to})`,
                 }}
               /> */}
-                  <h2 className="card-title ">{feature.title}</h2>
-                  <p>{feature.description}</p>
+                  <h2 className="card-title text-white">{feature.title}</h2>
+                  <p className="text-gray-50">{feature.description}</p>
                 </div>
               </div>
             ))}

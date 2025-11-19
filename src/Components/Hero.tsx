@@ -56,7 +56,7 @@ const Hero = () => {
               Next Gen-AI
             </span>
           </h1>
-          <p className="py-6  max-w-[16rem] sm:max-w-lg 2xl:max-w-xl mx-auto max-sm:text-xs text-slate-200">
+          <p className="py-6  max-w-[16rem] sm:max-w-lg 2xl:max-w-xl mx-auto max-sm:text-xs text-gray-50">
             Get role-specific questions and answers, expand answers when you
             need them, dive deeper into concepts, and organize everything your
             way from perpetration to mastery. your ultimate interview toolkit is

@@ -1,6 +1,6 @@
 import { ArrowRight, Menu, PencilRuler } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { setAuthModal } from "../redux/modalSlice";
+import { setAuthModal } from "../redux/authSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const Navbar = () => {
               <label
                 htmlFor="login_modal"
                 onClick={dispatchOpenModal}
-                className="btn btn-outline border-orange-400 py-4 px-8 btn-lg hover:bg-linear-to-r hover:from-orange-700 hover:to-orange-400 duration-300 transition-all active:scale-95"
+                className="btn btn-outline text-gray-50 border-orange-400 py-4 px-8 btn-lg hover:bg-linear-to-r hover:from-orange-700 hover:to-orange-400 duration-300 transition-all active:scale-95"
               >
                 Login/Signup
                 <ArrowRight />

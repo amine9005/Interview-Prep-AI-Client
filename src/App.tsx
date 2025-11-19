@@ -6,12 +6,12 @@ import Dashboard from "./Pages/Home/Dashboard";
 import InterviewPrep from "./Pages/InterviewPrep/InterviewPrep";
 import Layout from "./Layout";
 import { useSelector, useDispatch } from "react-redux";
-import { setAuthModal } from "./redux/modalSlice";
+import { setAuthModal } from "./redux/authSlice";
 import { type RootState } from "./redux/store";
 
 function App() {
   const authModalState = useSelector((state: RootState) =>
-    state.authModal.modalState.toString()
+    state.auth.modalState.toString()
   );
 
   const dispatch = useDispatch();
