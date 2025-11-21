@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const Hero = () => {
   return (
     <div className="hero bg-base-200 min-h-screen border-b border-orange-400 ">
@@ -62,9 +64,12 @@ const Hero = () => {
             way from perpetration to mastery. your ultimate interview toolkit is
             here
           </p>
-          <button className="btn btn-primary btn-sm lg:btn-xl py-4 px-20 bg-linear-to-r from-orange-700 to-orange-400 hover:from-orange-600 hover:to-orange-300 duration-100 transition-all hover:scale-105 active:scale-100">
+          <Link
+            to="/dashboard"
+            className="btn btn-primary btn-sm lg:btn-xl py-4 px-20 bg-linear-to-r from-orange-700 to-orange-400 hover:from-orange-600 hover:to-orange-300 duration-100 transition-all hover:scale-105 active:scale-100"
+          >
             Get Started
-          </button>
+          </Link>
         </div>
       </div>
     </div>

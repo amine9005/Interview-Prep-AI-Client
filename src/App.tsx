@@ -8,6 +8,7 @@ import Layout from "./Layout";
 import { useSelector, useDispatch } from "react-redux";
 import { setAuthModal } from "./redux/authSlice";
 import { type RootState } from "./redux/store";
+import CreateSession from "./Pages/InterviewPrep/CreateSession";
 
 function App() {
   const authModalState = useSelector((state: RootState) =>
@@ -48,6 +49,21 @@ function App() {
           onClick={dispatchCloseModal}
         ></label>
       </div>
+
+      <div
+        className={
+          authModalState === "CreateSession"
+            ? "modal modal-open transition duration-0"
+            : "modal transition duration-0"
+        }
+      >
+        <CreateSession />
+        <label
+          className="modal-backdrop w-screen h-screen"
+          onClick={dispatchCloseModal}
+        ></label>
+      </div>
+
       <div data-theme="Dark-and-Orange" className="bg-base-200">
         <Toaster />
         <Routes>
@@ -55,7 +71,6 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-
           <Route path="/dashboard" element={<Dashboard />} />
           <Route
             path="/Interview-prep/:session_id"

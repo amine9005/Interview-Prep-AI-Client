@@ -12,5 +12,10 @@ export const apiPaths = {
 
   SESSIONS: {
     GET_ALL: `${BASE_URL}/session/my-sessions`,
+    CREATE: `${BASE_URL}/session/create`,
+    DELETE: `${BASE_URL}/session/delete/:id`,
+  },
+  AI: {
+    GENERATE_QUESTIONS: `${BASE_URL}/ai/generate-questions`,
   },
 };

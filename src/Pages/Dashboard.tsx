@@ -1,42 +1,116 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import api from "../api/api";
 import { apiPaths } from "../utils/apiPaths";
-import { Album, Trash2 } from "lucide-react";
+import { Album, Loader2Icon, Plus, Trash2 } from "lucide-react";
+import type { Session } from "../types/types";
+import { fromDate } from "../utils/utils";
+import { Link } from "react-router";
+import { useDispatch } from "react-redux";
+import { setAuthModal } from "../redux/authSlice";
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
-  const [sessions, setSessions] = useState([]);
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  // const handleDelete = async (id: string) => {};
+
+  const dispatch = useDispatch();
+
+  const dispatch_create_session = () => {
+    dispatch(setAuthModal("CreateSession"));
+  };
+
+  const handle_delete = async (e: MouseEvent, id: string) => {
+    e.preventDefault();
+
+    try {
+      const res = await api.delete(apiPaths.SESSIONS.DELETE.replace(":id", id));
+      const { success } = res.data;
+      if (success) {
+        toast.success("Session deleted successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const getSessions = async () => {
+      setLoading(true);
       try {
         const res = await api.get(apiPaths.SESSIONS.GET_ALL);
-        console.log("res data: ", res.data);
+        const { success, data } = res.data;
 
-        setSessions(res.data);
+        console.log({ success, data });
+
+        setSessions(data);
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
     };
     getSessions();
   }, []);
 
   return (
     <div className="min-h-screen p-1 md:p-4">
-      <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <div className="card border p-2 hover:cursor-pointer hover:scale-105 hover:shadow-md hover:shadow-orange-800 hover:border-orange-500  border-orange-500">
-          <div className="card-title bg-green-950 p-2 rounded-xl ">
-            <Album className="size-10 text-orange-500" />
-            <div>
-              <h3 className="font-bold">Front-end Developer</h3>
-              <p className="text-xs text-slate-300">
-                React,JavaScript, HTML, CSS{" "}
-              </p>
-            </div>
-            <Trash2 className="hover:btn-outline hover:border-red-500 size-5 text-red-500 absolute bottom-4 right-4" />
-          </div>
-          <div className="card-body">bottom</div>
+      {loading ? (
+        <div className="flex flex-wrap min-h-screen justify-center items-center">
+          <Loader2Icon className="animate-spin size-20 text-orange-500" />
         </div>
-      </div>
+      ) : (
+        <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <button
+            onClick={() => dispatch_create_session()}
+            className="absolute bottom-20 right-30 btn btn-primary btn-lg px-8 hover:shadow-amber-400 hover:shadow-2xl"
+          >
+            <Plus />
+            add New
+          </button>
+          {/* Session Card */}
+          {sessions.map((session) => (
+            <Link
+              to={`/Interview-prep/${session._id}`}
+              key={session._id}
+              className="card border p-2 hover:cursor-pointer hover:scale-105 hover:shadow-md hover:shadow-orange-800 hover:border-orange-500  border-orange-500"
+            >
+              <div className="card-title bg-linear-to-r from-green-900 to-green-400 p-2 py-4 rounded-xl ">
+                <Album className="size-10" />
+                <div>
+                  <h3 className="font-bold">{session.role}</h3>
+                  <p className="text-xs text-slate-300">
+                    {session.topicToFocus}
+                  </p>
+                </div>
+              </div>
+              <div className="card-body  p-0 pt-2">
+                <div className="flex flex-wrap mt-2 gap-2">
+                  <div className="border border-white rounded-full p-2 font-semibold text-center">
+                    Experience: {session.experience} years
+                  </div>
+                  <div className="border border-white rounded-full p-2 font-semibold text-center">
+                    {session.questions.length} Q&A
+                  </div>
+                </div>
+                <div className="p-2 font-semibold">{session.description}</div>
+              </div>
+              <div className="flex flex-wrap justify-between p-1 mt-1">
+                <p className="text-slate-300/80 p-1 text-end">
+                  {fromDate(new Date(session.updatedAt))}
+                </p>
+                <button
+                  className="btn btn-ghost btn-circle hover:border-red-500"
+                  onClick={(e) => handle_delete(e, session._id)}
+                >
+                  <Trash2 className="hover:btn-outline hover:border-red-500 size-5 text-red-500 " />
+                </button>{" "}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

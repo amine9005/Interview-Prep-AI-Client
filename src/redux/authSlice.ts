@@ -4,7 +4,7 @@ import api from "../api/api";
 import { apiPaths } from "../utils/apiPaths";
 import type { UserProfile } from "../types/types";
 
-type windowSates = "Login" | "SignUp" | "Closed";
+type windowSates = "Login" | "SignUp" | "Closed" | "CreateSession";
 
 const modalState: windowSates = "Closed";
 
@@ -64,6 +64,10 @@ const authSlice = createSlice({
   reducers: {
     setAuthModal: (state, action) => {
       if (state.success) {
+        if (action.payload === "CreateSession") {
+          state.modalState = "CreateSession";
+          return;
+        }
         state.modalState = "Closed";
         return;
       }
