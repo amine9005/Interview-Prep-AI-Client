@@ -9,4 +9,8 @@ export const apiPaths = {
   IMAGE: {
     UPLOAD: `${BASE_URL}/user/upload-image`,
   },
+
+  SESSIONS: {
+    GET_ALL: `${BASE_URL}/session/my-sessions`,
+  },
 };

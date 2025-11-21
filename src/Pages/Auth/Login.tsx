@@ -115,7 +115,7 @@ const Login = () => {
             <span className="text-red-500">{errorMessage}</span>
           </label>
 
-          <label className="label">
+          <label className="label pl-2">
             <span className="text-gray-300 font-medium">Remember me</span>
             <input
               type="checkbox"

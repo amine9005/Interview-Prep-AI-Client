@@ -2,7 +2,7 @@ import { Toaster } from "react-hot-toast";
 import { Routes, Route } from "react-router";
 import Login from "./Pages/Auth/Login";
 import SignUp from "./Pages/Auth/SignUp";
-import Dashboard from "./Pages/Home/Dashboard";
+import Dashboard from "./Pages/Dashboard";
 import InterviewPrep from "./Pages/InterviewPrep/InterviewPrep";
 import Layout from "./Layout";
 import { useSelector, useDispatch } from "react-redux";

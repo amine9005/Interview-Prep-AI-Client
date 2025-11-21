@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import api from "../api/api";
 import { apiPaths } from "../utils/apiPaths";
+import type { UserProfile } from "../types/types";
 
 type windowSates = "Login" | "SignUp" | "Closed";
 
@@ -9,29 +10,44 @@ const modalState: windowSates = "Closed";
 
 const token = Cookies.get("token");
 
+console.log("token: ", token);
+
 interface initialStateType {
   modalState: windowSates;
   success: boolean;
-  user: object;
+  user: UserProfile | null;
   rememberMe: boolean;
   token: string | null;
+  profileImage: string | null;
 }
 
 const initialState: initialStateType = {
   modalState,
   success: false,
-  user: {},
+  user: null,
   rememberMe: false,
   token: null,
+  profileImage: null,
+};
+
+const clear_user = (state: initialStateType) => {
+  state.user = null;
+  state.success = false;
+  state.rememberMe = false;
+  state.token = null;
+  state.profileImage = null;
+  Cookies.remove("token");
 };
 
 if (token) {
   try {
-    const response = await api.post(apiPaths.AUTH.GET_PROFILE, {});
+    const response = await api.get(apiPaths.AUTH.GET_PROFILE);
 
     const { success, user } = response.data;
+
     if (success) {
       initialState.user = user;
+      initialState.profileImage = user.profileImageURL;
       initialState.success = success;
       initialState.modalState = "Closed";
       initialState.token = token;
@@ -39,6 +55,7 @@ if (token) {
   } catch (error) {
     console.log(error);
   }
+  console.log("initialState: ", initialState);
 }
 
 const authSlice = createSlice({
@@ -53,15 +70,12 @@ const authSlice = createSlice({
       state.modalState = action.payload;
     },
     Logout: (state) => {
-      state.user = {};
-      state.success = false;
-      state.rememberMe = false;
-      state.token = null;
-      Cookies.remove("token");
+      clear_user(state);
     },
     setUser: (state, payload) => {
       if (payload.payload.success) {
         state.user = payload.payload.user;
+        state.profileImage = payload.payload.user.profileImageURL;
         state.modalState = "Closed";
         state.success = true;
         state.token = payload.payload.token;
@@ -78,15 +92,11 @@ const authSlice = createSlice({
           });
         }
       } else {
-        state.user = {};
-        state.success = false;
-        state.rememberMe = false;
-        state.token = null;
-        Cookies.remove("token");
+        clear_user(state);
       }
     },
   },
 });
 
 export default authSlice.reducer;
-export const { setAuthModal, setUser } = authSlice.actions;
+export const { setAuthModal, setUser, Logout } = authSlice.actions;

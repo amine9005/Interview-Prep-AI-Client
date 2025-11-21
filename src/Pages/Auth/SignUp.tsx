@@ -7,20 +7,53 @@ import {
   User2,
   X,
 } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useState, useRef, type FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { setAuthModal, setUser } from "../../redux/authSlice";
 import { apiPaths } from "../../utils/apiPaths";
 import { useNavigate } from "react-router";
 import api from "../../api/api";
-import UploadImage from "../../Components/User/UploadImage";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingImg, setLoadingImg] = useState<boolean>(false);
+
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [imgUrl, setImgUrl] = useState<string>("");
+
+  const inputFile = useRef<HTMLInputElement>(null);
+  const form = new FormData();
+
+  const handle_click = () => {
+    if (inputFile.current) {
+      inputFile.current.click();
+    }
+  };
+
+  const handle_image_upload = async (e: File) => {
+    setLoadingImg(true);
+
+    try {
+      form.append("image", e);
+
+      const res = await api.post(apiPaths.IMAGE.UPLOAD, form);
+
+      console.log("res: ", res);
+
+      const { success, image } = res.data;
+      if (success) {
+        setImgUrl(image);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setLoadingImg(false);
+  };
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -36,6 +69,11 @@ const SignUp = () => {
   const handelSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      setErrorMessage("passwords don't match");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -43,7 +81,7 @@ const SignUp = () => {
         username,
         email,
         password,
-        profileImageURL: "",
+        profileImageURL: imgUrl,
       });
 
       console.log(res);
@@ -61,7 +99,7 @@ const SignUp = () => {
 
   return (
     // <div className="modal modal-open ">
-    <div className="card bg-base-100 absolute shadow-2xl p-5 shadow-orange-400">
+    <div className="card w-xs md:w-xl bg-base-100 absolute shadow-2xl p-2 shadow-orange-400">
       <div className="flex flex-wrap justify-end ">
         <X
           className="size-6 text-gray-50 hover:cursor-pointer hover:text-red-500 "
@@ -71,13 +109,56 @@ const SignUp = () => {
       <div className="card-title text-xl items-center justify-center pt-4 text-gray-50">
         SignUp
       </div>
-      <UploadImage />
-      <div className="card-body">
+      {/* User Image */}
+      <div className="flex flex-wrap justify-center items-center mt-4 ">
+        <input
+          onChange={(e) => {
+            if (e.target.files) {
+              handle_image_upload(e.target.files[0]);
+            }
+          }}
+          type="file"
+          accept="/image"
+          className="hidden"
+          ref={inputFile}
+        />
+        <div
+          className={`rounded-full cursor-pointer ${
+            loadingImg ? "" : "border border-white p-px"
+          }`}
+          onClick={handle_click}
+        >
+          {" "}
+          {loadingImg ? (
+            <div className="indicator">
+              <span className="indicator-item indicator-bottom badge badge-secondary"></span>
+              <div className="bg-base-300 grid h-32 w-32 place-items-center">
+                <Loader2 className="animate-spin w-15" />
+              </div>
+            </div>
+          ) : imgUrl ? (
+            <img
+              src={imgUrl}
+              alt="profile image"
+              className="size-15 object-cover rounded-full"
+            ></img>
+          ) : (
+            <div className="indicator flex flex-wrap justify-center">
+              <span className="indicator-item indicator-bottom rounded-full bg-green-400 p-2 mr-2 mb-2">
+                {" "}
+              </span>
+              <User2 className="size-15 text-white "></User2>
+            </div>
+          )}
+        </div>
+      </div>
+      {/* SignUp Form */}
+      <div className="card-body p-1 mt-2">
         <form
-          className="fieldset form space-y-2 gap-2"
+          className="fieldset form space-y-2 gap-2 p-1"
           onSubmit={(e) => handelSubmit(e)}
         >
-          <label className="input  min-w-md input-md">
+          <label className="input  w-full input-md">
             <User2 />
             <input
               type="text"
@@ -88,7 +169,7 @@ const SignUp = () => {
               placeholder="Full Name"
             />
           </label>
-          <label className="input  min-w-md input-md">
+          <label className="input w-full input-md">
             <Mail />
             <input
               type="email"
@@ -99,7 +180,7 @@ const SignUp = () => {
               placeholder="Email address"
             />
           </label>
-          <label className="input min-w-md input-md">
+          <label className="input w-full input-md">
             <KeySquare />
             <input
               type={showPassword ? "text" : "password"}
@@ -116,18 +197,20 @@ const SignUp = () => {
               />
             ) : (
               <LucideEyeOff
-                className="cursor-pointer "
+                className="cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               />
             )}
           </label>
 
-          <label className="input min-w-md input-md">
+          <label className="input w-full input-md">
             <KeySquare />
             <input
-              type={showPassword ? "text" : "password confirm"}
+              type={showPassword ? "text" : "password"}
               className="grow"
               required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm Password"
             />
             {showPassword ? (
@@ -142,7 +225,7 @@ const SignUp = () => {
               />
             )}
           </label>
-
+          <label className="text-red-500 pl-3 p-1">{errorMessage}</label>
           <button className="btn btn-neutral mt-4">
             {loading ? (
               <Loader2 className="animate-spin size-5"></Loader2>
