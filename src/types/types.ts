@@ -20,3 +20,15 @@ export interface Session {
   updatedAt: Date;
   __v: number;
 }
+
+export interface Question {
+  _id: string;
+  session: string;
+  question: string;
+  answer: string;
+  note: string;
+  isPinned: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}

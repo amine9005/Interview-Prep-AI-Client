@@ -20,8 +20,6 @@ const CreateSession = () => {
     setLoading(true);
 
     try {
-      console.log("here");
-
       const res = await api.post(apiPaths.AI.GENERATE_QUESTIONS, {
         role,
         experience,
@@ -40,16 +38,14 @@ const CreateSession = () => {
           questions: data,
         });
 
-        console.log("session res: ", addRes);
         const { success, message } = addRes.data;
         if (success) {
           toast.success(message);
+          dispatchCloseModal();
           navigate("/dashboard");
         } else {
           toast.error(message);
         }
-      } else {
-        console.log("Failed to generate questions");
       }
     } catch (error) {
       console.log(error);
@@ -64,16 +60,19 @@ const CreateSession = () => {
     dispatch(setAuthModal("Closed"));
   };
   return (
-    <div className="card w-xs md:w-xl bg-base-100 absolute shadow-2xl p-2 shadow-orange-400">
-      <div className="flex flex-wrap justify-end pt-1">
-        <X
-          className="size-6 text-gray-50 hover:cursor-pointer hover:text-red-500 "
-          onClick={dispatchCloseModal}
-        />
-      </div>
-      <div className="card-title p-2 text-xl items-center justify-start pt-4 text-gray-50">
-        <div className="p-2">
-          <h2>Start a New Interview Journey</h2>
+    <div className="card w-xs md:w-xl bg-slate-800 absolute shadow-2xl p-2 md:px-8 md:py-4 shadow-slate-400">
+      {/* <div className="flex flex-wrap justify-end pt-1"></div> */}
+      <div className="card-title p-2 text-xl items-center justify-start text-gray-50">
+        <div className="flex flex-wrap w-full p-2">
+          <div className="flex flex-wrap w-full justify-between">
+            <h2 className="text-sm md:text-xl">
+              Start a New Interview Journey
+            </h2>
+            <X
+              className="size-6 text-gray-50 hover:cursor-pointer hover:text-red-500 "
+              onClick={dispatchCloseModal}
+            />
+          </div>
           <p className="text-xs mt-4 text-slate-300">
             fill out a few details and unlock a personalized set of interview
             questions
@@ -149,7 +148,10 @@ const CreateSession = () => {
             </label>
           </div>
 
-          <button className="btn btn-neutral mt-4" disabled={loading}>
+          <button
+            className="btn bg-linear-to-r from-orange-700 to-orange-400  mt-4"
+            disabled={loading}
+          >
             {loading ? <Loader2 className="size-5 animate-spin" /> : "Create"}
           </button>
         </form>

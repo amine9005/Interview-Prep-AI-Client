@@ -62,7 +62,7 @@ const Login = () => {
 
   return (
     // <div className="modal modal-open ">
-    <div className="card w-xs md:w-xl bg-base-100 absolute shadow-2xl p-2 shadow-orange-400">
+    <div className="card w-xs md:w-xl bg-slate-800 absolute shadow-2xl p-2 md:px-8 md:py-4 shadow-slate-400">
       <div className="flex flex-wrap justify-end pt-1">
         <X
           className="size-6 text-gray-50 hover:cursor-pointer hover:text-red-500 "
@@ -125,7 +125,10 @@ const Login = () => {
             />
           </label>
 
-          <button className="btn btn-neutral mt-4" disabled={loading}>
+          <button
+            className="btn bg-linear-to-r from-orange-700 to-orange-400 mt-4"
+            disabled={loading}
+          >
             {loading ? <Loader2 className="size-5 animate-spin" /> : "Login"}
           </button>
           <div className="flex items-center justify-center  gap-2">

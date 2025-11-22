@@ -99,14 +99,14 @@ const SignUp = () => {
 
   return (
     // <div className="modal modal-open ">
-    <div className="card w-xs md:w-xl bg-base-100 absolute shadow-2xl p-2 shadow-orange-400">
+    <div className="card w-xs md:w-xl bg-slate-800 absolute shadow-2xl p-2 md:px-8 md:py-4 shadow-slate-400">
       <div className="flex flex-wrap justify-end ">
         <X
           className="size-6 text-gray-50 hover:cursor-pointer hover:text-red-500 "
           onClick={dispatchCloseModal}
         />
       </div>
-      <div className="card-title text-xl items-center justify-center pt-4 text-gray-50">
+      <div className="card-title text-xl items-center justify-center text-gray-50">
         SignUp
       </div>
       {/* User Image */}
@@ -226,7 +226,7 @@ const SignUp = () => {
             )}
           </label>
           <label className="text-red-500 pl-3 p-1">{errorMessage}</label>
-          <button className="btn btn-neutral mt-4">
+          <button className="btn bg-linear-to-r bg-orange-700 to-orange-400 mt-4">
             {loading ? (
               <Loader2 className="animate-spin size-5"></Loader2>
             ) : (

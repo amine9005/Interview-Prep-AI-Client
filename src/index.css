@@ -37,3 +37,8 @@
   --depth: 1;
   --noise: 0;
 }
+
+.reset-tw,
+.reset-tw * {
+  all: revert !important;
+}
