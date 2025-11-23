@@ -10,7 +10,7 @@ const modalState: windowSates = "Closed";
 
 const token = Cookies.get("token");
 
-console.log("token: ", token);
+// console.log("token: ", token);
 
 interface initialStateType {
   modalState: windowSates;
@@ -36,7 +36,7 @@ const clear_user = (state: initialStateType) => {
   state.rememberMe = false;
   state.token = null;
   state.profileImage = null;
-  Cookies.remove("token");
+  // Cookies.remove("token");
 };
 
 if (token) {
@@ -55,7 +55,7 @@ if (token) {
   } catch (error) {
     console.log(error);
   }
-  console.log("initialState: ", initialState);
+  // console.log("initialState: ", initialState);
 }
 
 const authSlice = createSlice({

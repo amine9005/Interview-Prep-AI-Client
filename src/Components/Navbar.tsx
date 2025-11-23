@@ -1,25 +1,39 @@
-import { ArrowRight, Menu, PencilRuler } from "lucide-react";
+import { ArrowRight, HomeIcon, Menu, PencilRuler } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthModal } from "../redux/authSlice";
 import type { RootState } from "../redux/store";
 import ProfileCard from "./User/ProfileCard";
 import { useNavigate } from "react-router";
+import { toggleSidebar } from "../redux/sidebarSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
+
   const navigate = useNavigate();
 
   const dispatchOpenModal = () => {
     dispatch(setAuthModal("Login"));
   };
 
+  const setOpenSidebar = () => {
+    if (user) {
+      dispatch(toggleSidebar());
+      return;
+    }
+    dispatchOpenModal();
+  };
+
   const home_screen = () => {
     navigate("/");
   };
+
+  const to_Dashboard = () => {
+    navigate("/dashboard");
+  };
   return (
     <>
-      <div className="navbar bg-base-200 w-full px-1 md:px-8 py-5 z-50 border-b border-b-orange-400">
+      <div className="navbar bg-base-200 w-full px-1 md:px-8 py-5 border-b border-b-orange-400">
         <div className="mx-2 flex-1 px-2">
           {/* Home Button */}
           <button
@@ -38,7 +52,16 @@ const Navbar = () => {
             {/* Navbar menu content here */}
             <li>
               {user ? (
-                <ProfileCard />
+                <div className="flex flex-wrap gap-4">
+                  <button
+                    className="btn btn-ghost text-orange-500"
+                    onClick={() => to_Dashboard()}
+                  >
+                    <HomeIcon className="size-8" />
+                    <span className="text-xl text-orange-500">Dashboard</span>
+                  </button>
+                  <ProfileCard />
+                </div>
               ) : (
                 <label
                   htmlFor="login_modal"
@@ -58,7 +81,7 @@ const Navbar = () => {
             aria-label="open sidebar"
             className="btn btn-square btn-ghost"
           >
-            <Menu className="size-10" />
+            <Menu className="size-10" onClick={() => setOpenSidebar()} />
           </label>
         </div>
       </div>

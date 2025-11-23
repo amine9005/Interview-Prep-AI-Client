@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 const Hero = () => {
   return (
-    <div className="hero bg-base-200 min-h-screen border-b border-orange-400 ">
+    <div className="hero bg-base-200 min-h-screen  ">
       <div className="hero-content text-center text-white">
         <div className="max-w-4xl">
           <div className="flex justify-center  items-center py-4">

@@ -41,9 +41,9 @@ const Dashboard = () => {
       setLoading(true);
       try {
         const res = await api.get(apiPaths.SESSIONS.GET_ALL);
-        const { success, data } = res.data;
+        const { data } = res.data;
 
-        console.log({ success, data });
+        // console.log({ success, data });
 
         setSessions(data);
       } catch (error) {
@@ -64,7 +64,7 @@ const Dashboard = () => {
         <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           <button
             onClick={() => dispatch_create_session()}
-            className="z-30 absolute bottom-10 justify-self-center md:bottom-20 md:right-30 btn btn-primary btn-lg px-8 hover:shadow-amber-400 hover:shadow-2xl"
+            className="z-10 absolute bottom-10 justify-self-center md:bottom-30 md:right-30 btn btn-primary btn-lg px-8 hover:shadow-amber-400 hover:shadow-2xl"
           >
             <Plus />
             add New

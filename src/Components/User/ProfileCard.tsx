@@ -27,9 +27,7 @@ const ProfileCard = () => {
       )}
 
       <div className="block">
-        <p className="text-white text-md font-bold">
-          {user?.username.split(" ")[0]}
-        </p>
+        <p className="text-white text-md font-bold">{user?.username}</p>
         <p
           className=" link link-hover text-orange-400 text-sm font-bold"
           onClick={() => dispatchLogout()}

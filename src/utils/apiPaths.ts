@@ -18,6 +18,7 @@ export const apiPaths = {
   },
   AI: {
     GENERATE_QUESTIONS: `${BASE_URL}/ai/generate-questions`,
+    GENERATE_EXPLANATION: `${BASE_URL}/ai/generate-explanation`,
   },
   QUESTION: {
     UPDATE_NOTE: `${BASE_URL}/question/:id/update-note`,

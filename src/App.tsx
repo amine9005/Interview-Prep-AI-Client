@@ -4,21 +4,35 @@ import Login from "./Pages/Auth/Login";
 import SignUp from "./Pages/Auth/SignUp";
 import Dashboard from "./Pages/Dashboard";
 import InterviewPrep from "./Pages/InterviewPrep/InterviewPrep";
-import Layout from "./Layout";
 import { useSelector, useDispatch } from "react-redux";
 import { setAuthModal } from "./redux/authSlice";
 import { type RootState } from "./redux/store";
 import CreateSession from "./Pages/InterviewPrep/CreateSession";
+import LandingPage from "./Pages/LandingPage";
+import NavItems from "./Components/NavItems";
+import { toggleSidebar } from "./redux/sidebarSlice";
+import Explanation from "./Pages/AI/Explanation";
 
 function App() {
   const authModalState = useSelector((state: RootState) =>
     state.auth.modalState.toString()
+  );
+  const isSideBarOpen = useSelector(
+    (state: RootState) => state.sidebar.sidebarOpen
+  );
+
+  const explanationOpen = useSelector(
+    (state: RootState) => state.sidebar.explanationOpen
   );
 
   const dispatch = useDispatch();
 
   const dispatchCloseModal = () => {
     dispatch(setAuthModal("Closed"));
+  };
+
+  const toggleSidebarDispatch = () => {
+    dispatch(toggleSidebar());
   };
 
   return (
@@ -66,14 +80,36 @@ function App() {
 
       <div data-theme="Dark-and-Orange" className="bg-base-200">
         <Toaster />
-        <Routes>
-          <Route path="/" element={<Layout />} />
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/Interview-prep/:id" element={<InterviewPrep />} />
-        </Routes>
+        <div className="drawer">
+          <input
+            checked={isSideBarOpen}
+            readOnly
+            id="sidebar"
+            type="checkbox"
+            className="drawer-toggle"
+          />
+          <div className="drawer-content">
+            {/* Page content here */}
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/Interview-prep/:id" element={<InterviewPrep />} />
+            </Routes>
+          </div>
+          <div className="drawer-side absolute z-20">
+            <label
+              onClick={() => toggleSidebarDispatch()}
+              htmlFor="sidebar"
+              aria-label="close sidebar"
+              className="drawer-overlay"
+            ></label>
+            {explanationOpen ? <Explanation /> : <NavItems />}
+          </div>
+        </div>
       </div>
     </>
   );

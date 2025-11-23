@@ -28,7 +28,7 @@ const CreateSession = () => {
       });
 
       const { success, data } = res.data;
-      console.log("questions: ", data);
+      // console.log("questions: ", data);
       if (success) {
         const addRes = await api.post(apiPaths.SESSIONS.CREATE, {
           role,
@@ -42,9 +42,9 @@ const CreateSession = () => {
         if (success) {
           toast.success(message);
           dispatchCloseModal();
-          navigate("/dashboard");
+          window.location.reload();
         } else {
-          toast.error(message);
+          toast.error("try again AI failed to generate questions");
         }
       }
     } catch (error) {
