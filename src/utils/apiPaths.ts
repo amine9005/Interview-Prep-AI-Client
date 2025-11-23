@@ -1,4 +1,7 @@
-export const BASE_URL = "http://localhost:4200/api";
+import dotenv from "dotenv";
+dotenv.config();
+
+export const BASE_URL = process.env.BASE_URL;
 
 export const apiPaths = {
   AUTH: {
