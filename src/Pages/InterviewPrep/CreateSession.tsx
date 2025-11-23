@@ -152,7 +152,13 @@ const CreateSession = () => {
             className="btn bg-linear-to-r from-orange-700 to-orange-400  mt-4"
             disabled={loading}
           >
-            {loading ? <Loader2 className="size-5 animate-spin" /> : "Create"}
+            {loading ? (
+              <>
+                <Loader2 className="size-5 animate-spin" /> Loading...
+              </>
+            ) : (
+              "Create"
+            )}
           </button>
         </form>
       </div>
