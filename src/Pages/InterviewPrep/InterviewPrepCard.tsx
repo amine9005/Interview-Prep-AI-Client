@@ -3,7 +3,7 @@ import type { Question } from "../../types/types";
 import {
   Check,
   Eye,
-  LightbulbIcon,
+  // LightbulbIcon,
   Loader2,
   PenBoxIcon,
   RotateCw,
@@ -13,21 +13,21 @@ import { MarkdownRender } from "../AI/MarkdownRender";
 import { apiPaths } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
 import api from "../../api/api";
-import { useDispatch } from "react-redux";
-import {
-  setExplanation,
-  toggleOpenExplanation,
-  toggleSidebar,
-} from "../../redux/sidebarSlice";
+// import { useDispatch } from "react-redux";
+// import {
+//   setExplanation,
+//   toggleOpenExplanation,
+//   toggleSidebar,
+// } from "../../redux/sidebarSlice";
 
 const InterviewPrepCard = ({ q, index }: { q: Question; index: number }) => {
   const [saveNoteLoading, setSaveNoteLoading] = useState(false);
-  const [explanationLoading, setExplanationLoading] = useState(false);
+  // const [explanationLoading, setExplanationLoading] = useState(false);
   const [show, setShow] = useState("");
   const [showNote, setShowNote] = useState("");
   const [note, setNote] = useState("");
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handle_save_note = async (q_id: string, note: string) => {
     if (!note) {
@@ -57,27 +57,27 @@ const InterviewPrepCard = ({ q, index }: { q: Question; index: number }) => {
     setSaveNoteLoading(false);
   };
 
-  const handle_generate_explanation = async (question: string) => {
-    setExplanationLoading(true);
-    try {
-      const res = await api.post(apiPaths.AI.GENERATE_EXPLANATION, {
-        question,
-      });
+  // const handle_generate_explanation = async (question: string) => {
+  //   setExplanationLoading(true);
+  //   try {
+  //     const res = await api.post(apiPaths.AI.GENERATE_EXPLANATION, {
+  //       question,
+  //     });
 
-      const { success, data } = res.data;
-      if (success) {
-        // console.log("data: ", data);
-        dispatch(setExplanation(data));
-        dispatch(toggleOpenExplanation());
-        dispatch(toggleSidebar());
-      } else {
-        toast.error("Failed to generate explanation, please try again later");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setExplanationLoading(false);
-  };
+  //     const { success, data } = res.data;
+  //     if (success) {
+  //       // console.log("data: ", data);
+  //       dispatch(setExplanation(data));
+  //       dispatch(toggleOpenExplanation());
+  //       dispatch(toggleSidebar());
+  //     } else {
+  //       toast.error("Failed to generate explanation, please try again later");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   setExplanationLoading(false);
+  // };
 
   return (
     <div
