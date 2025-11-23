@@ -5,14 +5,14 @@ import { setAuthModal } from "../../redux/authSlice";
 import api from "../../api/api";
 import toast from "react-hot-toast";
 import { apiPaths } from "../../utils/apiPaths";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 const CreateSession = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [role, setRole] = useState<string>("");
   const [experience, setExperience] = useState<string>("");
   const [topicToFocus, setTopicToFocus] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handelSubmit = async (e: FormEvent) => {
     e.preventDefault();
