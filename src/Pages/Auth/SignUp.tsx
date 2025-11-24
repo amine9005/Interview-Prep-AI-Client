@@ -30,8 +30,10 @@ const SignUp = () => {
   const form = new FormData();
 
   const handle_click = () => {
-    if (inputFile.current) {
-      inputFile.current.click();
+    if (!loadingImg) {
+      if (inputFile.current) {
+        inputFile.current.click();
+      }
     }
   };
 
@@ -130,12 +132,7 @@ const SignUp = () => {
         >
           {" "}
           {loadingImg ? (
-            <div className="indicator">
-              <span className="indicator-item indicator-bottom badge badge-secondary"></span>
-              <div className="bg-base-300 grid h-32 w-32 place-items-center">
-                <Loader2 className="animate-spin w-15" />
-              </div>
-            </div>
+            <Loader2 className="animate-spin size-15 p-2 bg-base-200 rounded-full" />
           ) : imgUrl ? (
             <img
               src={imgUrl}

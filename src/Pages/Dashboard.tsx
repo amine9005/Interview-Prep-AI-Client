@@ -55,7 +55,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen p-1 md:p-4">
+    <div className="min-h-screen p-4 md:p-4">
       {loading ? (
         <div className="flex flex-wrap min-h-screen justify-center items-center">
           <Loader2Icon className="animate-spin size-20 text-orange-500" />
@@ -69,46 +69,57 @@ const Dashboard = () => {
             <Plus />
             add New
           </button>
+
           {/* Session Card */}
-          {sessions.map((session) => (
-            <Link
-              to={`/Interview-prep/${session._id}`}
-              key={session._id}
-              className="card bg-slate-800  p-2 hover:cursor-pointer hover:scale-105 hover:shadow-md hover:shadow-slate-400 hover:border-slate-400 border-r-4"
-            >
-              <div className="card-title bg-linear-to-r from-blue-900 to-blue-400 p-2 py-4 rounded-xl ">
-                <Album className="size-10" />
-                <div>
-                  <h3 className="font-bold">{session.role}</h3>
-                  <p className="text-xs text-slate-300">
-                    {session.topicToFocus}
+          {sessions.length === 0 ? (
+            <div className="min-h-screen p-4">
+              <div className="flex flex-wrap justify-center items-center">
+                <h1 className="font-bold text-white">
+                  Welcome!, Start by creating a new session
+                </h1>
+              </div>
+            </div>
+          ) : (
+            sessions.map((session) => (
+              <Link
+                to={`/Interview-prep/${session._id}`}
+                key={session._id}
+                className="card bg-slate-800  p-2 hover:cursor-pointer hover:scale-105 hover:shadow-md hover:shadow-slate-400 hover:border-slate-400 border-r-4"
+              >
+                <div className="card-title bg-linear-to-r from-blue-900 to-blue-400 p-2 py-4 rounded-xl ">
+                  <Album className="size-10" />
+                  <div>
+                    <h3 className="font-bold">{session.role}</h3>
+                    <p className="text-xs text-slate-300">
+                      {session.topicToFocus}
+                    </p>
+                  </div>
+                </div>
+                <div className="card-body  p-0 pt-2">
+                  <div className="flex flex-wrap mt-2 gap-2">
+                    <div className="border border-white rounded-full p-2 font-semibold text-center">
+                      Experience: {session.experience.split(" ")[0]} years
+                    </div>
+                    <div className="border border-white rounded-full p-2 font-semibold text-center">
+                      {session.questions.length} Q&A
+                    </div>
+                  </div>
+                  <div className="p-2 font-semibold">{session.description}</div>
+                </div>
+                <div className="flex flex-wrap justify-between p-1 mt-1">
+                  <p className="text-slate-300/80 p-1 text-end">
+                    {fromDate(new Date(session.updatedAt))}
                   </p>
+                  <button
+                    className="btn btn-ghost btn-circle hover:border-red-500"
+                    onClick={(e) => handle_delete(e, session._id)}
+                  >
+                    <Trash2 className="hover:btn-outline hover:border-red-500 size-5 text-red-500 " />
+                  </button>{" "}
                 </div>
-              </div>
-              <div className="card-body  p-0 pt-2">
-                <div className="flex flex-wrap mt-2 gap-2">
-                  <div className="border border-white rounded-full p-2 font-semibold text-center">
-                    Experience: {session.experience.split(" ")[0]} years
-                  </div>
-                  <div className="border border-white rounded-full p-2 font-semibold text-center">
-                    {session.questions.length} Q&A
-                  </div>
-                </div>
-                <div className="p-2 font-semibold">{session.description}</div>
-              </div>
-              <div className="flex flex-wrap justify-between p-1 mt-1">
-                <p className="text-slate-300/80 p-1 text-end">
-                  {fromDate(new Date(session.updatedAt))}
-                </p>
-                <button
-                  className="btn btn-ghost btn-circle hover:border-red-500"
-                  onClick={(e) => handle_delete(e, session._id)}
-                >
-                  <Trash2 className="hover:btn-outline hover:border-red-500 size-5 text-red-500 " />
-                </button>{" "}
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))
+          )}
         </div>
       )}
     </div>

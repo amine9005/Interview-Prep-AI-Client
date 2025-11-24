@@ -22,12 +22,12 @@ const HomeCards = () => {
                 key={index}
               >
                 <div className="card-body text-center justify-center items-center">
-                  {/* <feature.Icon
-                className="w-12 h-12 p-3 text-white rounded-xl"
-                style={{
-                  background: `linear-gradient(to bottom, ${feature.bg.from}, ${feature.bg.to})`,
-                }}
-              /> */}
+                  <feature.icon
+                    className="size-15 p-3 text-white rounded-xl bg-linear-to-r from-orange-500  to-amber-300"
+                    // style={{
+                    //   background: `linear-gradient(to bottom, ${feature.bg.from}, ${feature.bg.to})`,
+                    // }}
+                  />
                   <h2 className="card-title text-white">{feature.title}</h2>
                   <p className="text-gray-50">{feature.description}</p>
                 </div>

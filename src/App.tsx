@@ -12,6 +12,7 @@ import LandingPage from "./Pages/LandingPage";
 import NavItems from "./Components/NavItems";
 import { toggleSidebar } from "./redux/sidebarSlice";
 import Explanation from "./Pages/AI/Explanation";
+import ProtectedRoutes from "./Pages/Auth/ProtectedRoutes";
 
 function App() {
   const authModalState = useSelector((state: RootState) =>
@@ -93,11 +94,10 @@ function App() {
             {/* Page content here */}
             <Routes>
               <Route path="/" element={<LandingPage />} />
-
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/Interview-prep/:id" element={<InterviewPrep />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/Interview-prep/:id" element={<InterviewPrep />} />
+              </Route>
             </Routes>
           </div>
           <div className="drawer-side absolute z-20">

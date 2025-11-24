@@ -125,33 +125,46 @@ const InterviewPrepCard = ({ q, index }: { q: Question; index: number }) => {
 
             {showNote === q._id ? (
               <>
-                <X
-                  className="size-10 rounded-full p-2 bg-red-500 cursor-pointer"
+                <button
                   onClick={() => setShowNote("")}
-                />
-                {saveNoteLoading ? (
-                  <>
-                    <button className="btn bg-green-500 btn-circle">
-                      <Loader2 className="size-5 text-white rounded-full  animate-spin" />
-                    </button>
-                  </>
-                ) : (
-                  <Check
-                    className="size-10 rounded-full p-2 bg-green-500 cursor-pointer"
-                    onClick={() => handle_save_note(q._id, note)}
-                  />
-                )}
+                  className="btn btn-md px-4 bg-linear-to-r from-red-600 to-red-400"
+                >
+                  <X className="size-8  text-white" />
+                  <span className="text-md text-white">Cancel</span>
+                </button>
+                <button
+                  onClick={() => handle_save_note(q._id, note)}
+                  className="btn btn-md px-4 bg-linear-to-r from-green-600 to-green-400"
+                >
+                  {saveNoteLoading ? (
+                    <>
+                      <Loader2 className="size-8 text-white rounded-full  animate-spin" />{" "}
+                      <span className="text-md text-white"> Loading...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Check className="size-8 text-white " />{" "}
+                      <span className="text-md text-white">Save</span>
+                    </>
+                  )}
+                </button>
               </>
             ) : (
               <>
-                <Eye
-                  className="size-10 rounded-full p-2 bg-yellow-500 cursor-pointer"
+                <button
                   onClick={() => setShow(q._id)}
-                />
-                <PenBoxIcon
-                  className="size-10 rounded-full p-2 bg-blue-500 cursor-pointer"
+                  className="btn btn-md px-4 bg-linear-to-r bg-yellow-600 to-yellow-400"
+                >
+                  <Eye className="size-8 text-white" />
+                  <span className="text-md text-white">Show Answer</span>
+                </button>
+                <button
                   onClick={() => setShowNote(q._id)}
-                />
+                  className="btn btn-md px-4 bg-linear-to-r bg-blue-600 to-blue-400"
+                >
+                  <PenBoxIcon className="size-8 text-white" />
+                  <span className="text-md text-white">Take Notes</span>
+                </button>
               </>
             )}
           </div>
@@ -165,10 +178,13 @@ const InterviewPrepCard = ({ q, index }: { q: Question; index: number }) => {
             <MarkdownRender children={q.answer} />
           </div>
           <div className="p-2 flex flex-wrap justify-center items-center gap-4">
-            <RotateCw
-              className="size-10 rounded-full p-2 bg-yellow-500 cursor-pointer"
+            <button
               onClick={() => setShow("")}
-            />
+              className="btn btn-md px-4 bg-linear-to-r bg-yellow-600 to-yellow-400"
+            >
+              <RotateCw className="size-7 text-white" />
+              <span className="text-md text-white">Return to question</span>
+            </button>
             {/* {explanationLoading ? (
               <>
                 <button className="btn bg-blue-500 btn-circle">

@@ -1,6 +1,21 @@
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { setAuthModal } from "../redux/authSlice";
+import type { RootState } from "../redux/store";
 
 const Hero = () => {
+  const user = useSelector((state: RootState) => state.auth.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handle_get_started = () => {
+    if (user) {
+      navigate("/dashboard");
+      return;
+    }
+    dispatch(setAuthModal("Login"));
+  };
+
   return (
     <div className="hero bg-base-200 min-h-screen  ">
       <div className="hero-content text-center text-white">
@@ -29,13 +44,12 @@ const Hero = () => {
               />
             </div>
             <div>
-              <div className="rating ">
+              <div key={-1} className="rating ">
                 {Array(5)
                   .fill(0)
                   .map((_, index) => (
                     <input
                       type="radio"
-                      name="rating-2"
                       disabled
                       defaultChecked
                       className="mask mask-star-2 bg-orange-400 hover:cursor-default"
@@ -64,12 +78,12 @@ const Hero = () => {
             way from perpetration to mastery. your ultimate interview toolkit is
             here
           </p>
-          <Link
-            to="/dashboard"
+          <button
+            onClick={() => handle_get_started()}
             className="btn btn-primary btn-sm lg:btn-xl py-4 px-20 bg-linear-to-r from-orange-700 to-orange-400 hover:from-orange-600 hover:to-orange-300 duration-100 transition-all hover:scale-105 active:scale-100"
           >
             Get Started
-          </Link>
+          </button>
         </div>
       </div>
     </div>
