@@ -6,7 +6,9 @@ const Testimonials = () => {
     <div className="min-h-screen p-4">
       <div className="w-full space-y-4">
         <div className="text-center">
-          <h2 className="text-white text-[42px] text-semiBold">Love By Many</h2>
+          <h2 className="text-white text-[42px] text-semiBold">
+            Loved By Many
+          </h2>
           <p className="text-gray-50 max-w-lg mx-auto py-4">
             Don't just take our word for it. Here's what our users are saying..{" "}
           </p>
