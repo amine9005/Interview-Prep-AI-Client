@@ -1,7 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-export const BASE_URL = process.env.BASE_URL;
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
+// console.log("BASE_URL: ", BASE_URL);
 
 export const apiPaths = {
   AUTH: {

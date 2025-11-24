@@ -228,7 +228,9 @@ const SignUp = () => {
           <label className="text-red-500 pl-3 p-1">{errorMessage}</label>
           <button className="btn bg-linear-to-r bg-orange-700 to-orange-400 mt-4">
             {loading ? (
-              <Loader2 className="animate-spin size-5"></Loader2>
+              <>
+                <Loader2 className="animate-spin size-5"></Loader2> Loading...
+              </>
             ) : (
               "Sign Up"
             )}

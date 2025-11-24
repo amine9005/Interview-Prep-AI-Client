@@ -129,7 +129,13 @@ const Login = () => {
             className="btn bg-linear-to-r from-orange-700 to-orange-400 mt-4"
             disabled={loading}
           >
-            {loading ? <Loader2 className="size-5 animate-spin" /> : "Login"}
+            {loading ? (
+              <>
+                <Loader2 className="size-5 animate-spin" /> Loading...
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
           <div className="flex items-center justify-center  gap-2">
             <span>Don't have account ? </span>
