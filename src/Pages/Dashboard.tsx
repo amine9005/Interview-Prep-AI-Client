@@ -75,7 +75,8 @@ const Dashboard = () => {
             <div className="min-h-screen p-4">
               <div className="flex flex-wrap justify-center items-center">
                 <h1 className="font-bold text-white">
-                  Welcome!, Start by creating a new session
+                  Welcome!, Start By Creating A New Session By Using The Button
+                  Bellow
                 </h1>
               </div>
             </div>
